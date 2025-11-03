@@ -21,8 +21,6 @@
   "Special faces for the Catala mode."
   :group 'catala)
 
-(require 'tree-sitter-hl)
-
 (defface catala-font-lock-law-text-face
   '((t (:family "DejaVu Serif" :height 1.15)))
   "Face description for Catala law."
@@ -49,22 +47,22 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-verbatim-face
-  '((t (:inherit tree-sitter-hl-face:comment :extend t :background "grey15")))
+  '((t (:inherit font-lock-comment-face :extend t :background "grey15")))
   "Face description for Catala verbatim blocks."
   :group 'catala-faces)
 
 (defface catala-font-lock-comment-face
-  '((t (:inherit tree-sitter-hl-face:comment)))
+  '((t (:inherit font-lock-comment-face)))
   "Face description for Catala comments."
   :group 'catala-faces)
 
 (defface catala-font-lock-attribute-face
-  '((t (:inherit tree-sitter-hl-face:doc)))
+  '((t (:inherit font-lock-doc-face)))
   "Face description for Catala attributes."
   :group 'catala-faces)
 
 (defface catala-font-lock-scope-face
-  '((t (:inherit tree-sitter-hl-face:function)))
+  '((t (:inherit font-lock-function-name-face)))
   "Face description for Catala scope names."
   :group 'catala-faces)
 
@@ -74,7 +72,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-builtin-face
-  '((t (:inherit tree-sitter-hl-face:function.builtin)))
+  '((t (:inherit font-lock-function-name-face)))
   "Face description for Catala builtins."
   :group 'catala-faces)
 
@@ -84,17 +82,17 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-label-face
-  '((t (:inherit tree-sitter-hl-face:label :underline t)))
+  '((t (:inherit font-lock-label-face :underline t)))
   "Face description for Catala labels."
   :group 'catala-faces)
 
 (defface catala-font-lock-state-face
-  '((t (:inherit tree-sitter-hl-face:variable :slant italic)))
+  '((t (:inherit font-lock-variable-name-face :slant italic)))
   "Face description for Catala state labels."
   :group 'catala-faces)
 
 (defface catala-font-lock-punctuation-face
-  '((t (:inherit tree-sitter-hl-face:punctuation)))
+  '((t (:inherit font-lock-doc-markup-face)))
   "Face description for Catala punctuation."
   :group 'catala-faces)
 
@@ -104,7 +102,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-literal-face
-  '((t (:inherit tree-sitter-hl-face:constant)))
+  '((t (:inherit font-lock-constant-face)))
   "Face description for Catala literals."
   :group 'catala-faces)
 
@@ -114,7 +112,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-variable-face
-  '((t (:inherit tree-sitter-hl-face:variable)))
+  '((t (:inherit font-lock-variable-name-face)))
   "Face description for Catala variables."
   :group 'catala-faces)
 
@@ -124,7 +122,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-module-face
-  '((t (:inherit tree-sitter-hl-face:doc)))
+  '((t (:inherit font-lock-doc-face)))
   "Face description for Catala modules."
   :group 'catala-faces)
 
@@ -148,11 +146,6 @@
   "Face description for Catala parse errors."
   :group 'catala-faces)
 
-(defface catala-font-lock-x-face
-  '((t (:inherit tree-sitter-hl-face:x)))
-  "Face description for Catala xs."
-  :group 'catala-faces)
-
 
 (defun catala--treesit-font-lock-settings (lang)
   "Tree-sitter Catala font-lock settings."
@@ -161,8 +154,9 @@
      "(law_text) @catala-font-lock-law-text-face"
    :language lang :feature 'all :override t
      "(law_heading
-        (LAW_HEADING) @catala-font-lock-law-heading-face
-        (LAW_LABEL)? @catala-font-lock-label-face)"
+        (\"|\")? @catala-font-lock-punctuation-face
+        (LAW_LABEL)? @catala-font-lock-label-face)
+      @catala-font-lock-law-heading-face"
    :language lang :feature 'all :override t
      "(directive) @catala-font-lock-directive-face"
    :language lang :feature 'all :override t
@@ -203,8 +197,8 @@
      "(e_binop [(MULT) (DIV) (PLUS) (MINUS) (PLUSPLUS) (LESSER) (LESSER_EQUAL) (GREATER) (GREATER_EQUAL) (EQUAL) (NOT_EQUAL) (AND) (OR) (XOR)] @catala-font-lock-operator-face)"
    :language lang :feature 'all :override t
      "[(begin_metadata_fence) (begin_code_fence) (end_block_fence)] @catala-font-lock-code-delimiter-face"
-  :language lang :feature 'all :override 'keep
-    "(ERROR) @catala-font-lock-error-face"
+   :language lang :feature 'all :override 'keep
+     "(ERROR) @catala-font-lock-error-face"
    :language lang :feature 'all :override 'keep
      "(expression) @catala-font-lock-expression-face"
    :language lang :feature 'all :override 'keep
@@ -214,7 +208,7 @@
    :language lang :feature 'all :override 'keep
      "[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language lang :feature 'all :override 'prepend
-     "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (OPTION) (CONTAINS) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (POSITION) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IMPOSSIBLE) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
+     "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (OPTION) (CONTAINS) (ENUM) (INTEGER) (MONEY) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (POSITION) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (WITH) (FOR) (ALL) (WE_HAVE) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IMPOSSIBLE) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
    :language lang :feature 'all :override t
      '((COMMENT) @catala-font-lock-comment-face)
    :language lang :feature 'all :override t
@@ -327,9 +321,16 @@
     nil
     "\n```catala-test-cli\n$ catala " _ "\n```\n" \n)
 
+  (defun indent-or-cycle ()
+    (interactive nil)
+    (if (eq (face-at-point) 'catala-font-lock-code-block-face)
+        (indent-according-to-mode)
+      (markdown-cycle)))
+
   (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
   (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
   (define-key catala-ts-mode-map "\C-c.t" 'catala-insert-test-block)
+  (define-key catala-ts-mode-map [tab] 'indent-or-cycle)
 
   ; activate prettify-symbols-mode to use. Note: affects indentation
   ; You can use: (add-hook 'catala-mode-hook 'prettify-symbols-mode)
