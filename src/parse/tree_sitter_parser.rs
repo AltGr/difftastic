@@ -82,6 +82,8 @@ extern "C" {
     fn tree_sitter_smali() -> ts::Language;
     fn tree_sitter_scss() -> ts::Language;
     fn tree_sitter_vhdl() -> ts::Language;
+    fn tree_sitter_catala_en() -> ts::Language;
+    fn tree_sitter_catala_fr() -> ts::Language;
 }
 
 // TODO: begin/end and object/end.
@@ -1153,7 +1155,7 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
                 sub_languages: vec![],
             }
         }
-        Catala_en => {
+        CatalaEn => {
             let language = unsafe { tree_sitter_catala_en() };
             TreeSitterConfig {
                 language: language.clone(),
@@ -1161,13 +1163,13 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
                 delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
                 highlight_query: ts::Query::new(
                     &language,
-                    include_str!("../../vendored_parsers/tree-sitter-catala/queries/highlights.scm"),
+                    include_str!("../../vendored_parsers/highlights/catala.scm"),
                 )
                 .unwrap(),
                 sub_languages: vec![],
             }
         }
-        Catala_fr => {
+        CatalaFr => {
             let language = unsafe { tree_sitter_catala_fr() };
             TreeSitterConfig {
                 language: language.clone(),
@@ -1175,7 +1177,7 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
                 delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
                 highlight_query: ts::Query::new(
                     &language,
-                    include_str!("../../vendored_parsers/tree-sitter-catala/queries/highlights.scm"),
+                    include_str!("../../vendored_parsers/highlights/catala.scm"),
                 )
                 .unwrap(),
                 sub_languages: vec![],

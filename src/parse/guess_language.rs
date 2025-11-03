@@ -83,6 +83,8 @@ pub(crate) enum Language {
     Xml,
     Yaml,
     Zig,
+    CatalaEn,
+    CatalaFr,
 }
 
 /// Users can explicitly request to treat a certain file glob pattern
@@ -184,8 +186,8 @@ pub(crate) fn language_name(language: Language) -> &'static str {
         Xml => "XML",
         Yaml => "YAML",
         Zig => "Zig",
-        Catala_en => "catala_en",
-        Catala_fr => "catala_fr",
+        CatalaEn => "catala_en",
+        CatalaFr => "catala_fr",
     }
 }
 
@@ -418,6 +420,8 @@ pub(crate) fn language_globs(language: Language) -> Vec<glob::Pattern> {
         ],
         Yaml => &["*.yaml", "*.yml"],
         Zig => &["*.zig"],
+        CatalaEn => &["*.catala_en"],
+        CatalaFr => &["*.catala_fr"],
     };
 
     glob_strs
