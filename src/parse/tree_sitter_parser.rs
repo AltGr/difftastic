@@ -1153,6 +1153,34 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
                 sub_languages: vec![],
             }
         }
+        Catala_en => {
+            let language = unsafe { tree_sitter_catala_en() };
+            TreeSitterConfig {
+                language: language.clone(),
+                atom_nodes: [].into_iter().collect(),
+                delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
+                highlight_query: ts::Query::new(
+                    &language,
+                    include_str!("../../vendored_parsers/tree-sitter-catala/queries/highlights.scm"),
+                )
+                .unwrap(),
+                sub_languages: vec![],
+            }
+        }
+        Catala_fr => {
+            let language = unsafe { tree_sitter_catala_fr() };
+            TreeSitterConfig {
+                language: language.clone(),
+                atom_nodes: [].into_iter().collect(),
+                delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
+                highlight_query: ts::Query::new(
+                    &language,
+                    include_str!("../../vendored_parsers/tree-sitter-catala/queries/highlights.scm"),
+                )
+                .unwrap(),
+                sub_languages: vec![],
+            }
+        }
     }
 }
 

@@ -184,6 +184,8 @@ pub(crate) fn language_name(language: Language) -> &'static str {
         Xml => "XML",
         Yaml => "YAML",
         Zig => "Zig",
+        Catala_en => "catala_en",
+        Catala_fr => "catala_fr",
     }
 }
 
