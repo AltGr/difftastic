@@ -1159,8 +1159,8 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
             let language = unsafe { tree_sitter_catala_en() };
             TreeSitterConfig {
                 language: language.clone(),
-                atom_nodes: [].into_iter().collect(),
-                delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
+                atom_nodes: vec!["e_variable", "literal", "builtin"].into_iter().collect(),
+                delimiter_tokens: vec![("LBRACE", "RBRACE"), ("LBRACKET", "RBRACKET"), ("LPAREN", "RPAREN")],
                 highlight_query: ts::Query::new(
                     &language,
                     include_str!("../../vendored_parsers/highlights/catala.scm"),
@@ -1173,8 +1173,8 @@ pub(crate) fn from_language(language: guess::Language) -> TreeSitterConfig {
             let language = unsafe { tree_sitter_catala_fr() };
             TreeSitterConfig {
                 language: language.clone(),
-                atom_nodes: [].into_iter().collect(),
-                delimiter_tokens: vec![("{", "}"), ("[", "]"), ("(", ")")],
+                atom_nodes: vec!["e_variable", "literal", "builtin"].into_iter().collect(),
+                delimiter_tokens: vec![("LBRACE", "RBRACE"), ("LBRACKET", "RBRACKET"), ("LPAREN", "RPAREN")],
                 highlight_query: ts::Query::new(
                     &language,
                     include_str!("../../vendored_parsers/highlights/catala.scm"),
